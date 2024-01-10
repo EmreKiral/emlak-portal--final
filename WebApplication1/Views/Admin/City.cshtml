@@ -1,0 +1,201 @@
+﻿
+@{
+    ViewData["Title"] = "City";
+    Layout = "~/Views/Shared/Admin.cshtml";
+}
+
+
+<div class="row mt-10" style="margin-top:10px;">
+    <div class="col-md-12">
+        <table class="table table-dark" id="citytable">
+            <thead>
+                <tr>
+                    <td>Sıra No</td>
+                    <td>İl Adı</td>
+                    <td>İslemler</td>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4" style="margin-top:20px;">
+            <div class="card-body">
+                <div class="table">
+                    <form>
+                        <input type="hidden" name="id" id="id" />
+
+                        <label>Yeni İl Adi : </label>
+                        <input type="text" class="form-control" name="sehirAdi" id="sehirAdi" /><br />
+                       
+
+                        <button class="btn btn-success">Şehri Güncelle</button>
+                        <button class="btn btn-danger">Şehri Sil</button>
+
+                        <button class="btn btn-info" id="ekleButton">Yeni Şehir Ekle</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+
+
+            cirtyfind();
+
+            function cirtyfind() {
+                $("#citytable tbody").empty();
+                $.ajax({
+                    url: "/Admin/CityList",
+                    type: "Get",
+                    data: {},
+                    success: function (data) {
+                        var i = 1;
+                        $.each(data, function (index, item) {
+                            var tr = $('<tr id="' + item.id + '"></tr>');
+                            tr.append('<td>' + i + '</td>');
+                            tr.append('<td>' + item.sehirAdi + '</td>');
+
+
+                            var btnGuncelle = $('<button type="button" id="duzenleButton" class="btn btn-secondary">Düzenle</button>');
+                            btnGuncelle.click(function () {
+                                btnGuncelleClick(item.id, item.sehirAdi);
+                            });
+                            var td = $('<td></td>');
+                            td.append(btnGuncelle);
+                            tr.append(td);
+
+                            $("#citytable tbody").append(tr);
+                            i++;
+                        });
+                    }
+                });
+            }
+
+            function btnGuncelleClick(id, sehirAdi) {
+                $("#id").val(id);
+                $("#sehirAdi").val(sehirAdi);
+
+            }
+
+
+
+
+
+            $("button.btn-success").click(function () {
+                event.preventDefault();
+
+                var id = $("#id").val();
+                var sehirAdi = $("#sehirAdi").val();
+
+
+
+                if (sehirAdi.trim() === "") {
+                    toastr.error('Hatalı İşlem yapıyorsunuz.');
+                    return;
+                }
+
+                if (id.trim() === "") {
+
+                    toastr.error('Hatalı İşlem yapıyorsunuz.');
+                    return;
+                }
+
+
+
+
+                $.ajax({
+                    url: "/Admin/CityUpdate",
+                    type: "POST",
+                    data: { id: id, sehirAdi: sehirAdi },
+                    success: function (response) {
+                        toastr.success('Güncelleme Başarılı');
+                        $("#id").val("");
+                        $("#sehirAdi").val("");
+
+                        cirtyfind();
+                    },
+                    error: function () {
+                        toastr.error('Hatalı İşlem yapıyorsunuz.');
+                    }
+                });
+            });
+
+            $("button.btn-danger").click(function () {
+                event.preventDefault();
+
+                var id = $("#id").val();
+                var sehirAdi = $("#sehirAdi").val();
+
+                if (sehirAdi.trim() === "") {
+                    toastr.error('Hatalı İşlem yapıyorsunuz.');
+                    return;
+                }
+
+                if (id.trim() === "") {
+
+                    toastr.error('Hatalı İşlem yapıyorsunuz.');
+                    return;
+                }
+
+                $.ajax({
+                    url: "/Admin/CityDelete",
+                    type: "POST",
+                    data: { id: id, sehirAdi: sehirAdi },
+                    success: function (response) {
+                        toastr.success('Silme İşlemi Başarılı');
+                        $("#id").val("");
+                        $("#sehirAdi").val("");
+
+                        cirtyfind();
+                    },
+                    error: function () {
+                        console.error("Veri Silme işleminde hata oluştu.");
+                    }
+                });
+            });
+            $("button.btn-info").click(function () {
+                event.preventDefault();
+
+                var id = $("#id").val();
+                var sehirAdi = $("#sehirAdi").val();
+
+                if (sehirAdi.trim() === "") {
+                    toastr.error('Hatalı İşlem yapıyorsunuz.');
+                    return;
+                }
+
+
+                $.ajax({
+                    url: "/Admin/CityInsert",
+                    type: "POST",
+                    data: { sehirAdi: sehirAdi },
+                    success: function (response) {
+                        toastr.success('Ekleme İşlem Başarılı.');
+                        $("#id").val("");
+                        $("#kategori").val("");
+                        cirtyfind();
+                        return;
+                    },
+                    error: function () {
+                        toastr.error('Hatalı İşlem yapıyorsunuz.');
+                    }
+                });
+            });
+        });
+
+
+    </script>
+}

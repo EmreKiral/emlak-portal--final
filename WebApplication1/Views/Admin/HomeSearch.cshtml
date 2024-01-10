@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewData["Title"] = "HomeSearch";
+    Layout = "~/Views/Shared/Admin.cshtml";
+}
+
+@model HouseViewModel
+<div class="row" style="margin-top:3%">
+    <div class="col-md-12">
+        <form asp-action="HomeSearch" asp-controller="Admin" enctype="multipart/form-data">
+            <div>
+                <label asp-for="Name"></label>
+                <input class="form-control form-control-lg" asp-for="Name" atype="text" placeholder="Ev Başlığını Giriniz" aria-label=".form-control-lg example">
+                <span asp-validation-for="Name"></span>
+            </div>
+            <div>
+                <label asp-for="Description"></label>
+                <textarea rows="15" class="form-control" asp-for="Description" aria-label="Ev Açıklamasını Giriniz"></textarea>
+                <span asp-validation-for="Description" aria-label="Ev Açıklamasını Giriniz"></span>
+            </div>
+            <div>
+                <label asp-for="CityId"></label>
+                @Html.DropDownListFor(x => x.CityId, (List<SelectListItem>)ViewBag.CityList, new { @class = "form-control", required = "required" })
+                <span asp-validation-for="CityId"></span>
+            </div>
+            <div>
+                <label asp-for="PersonPhoneNumber"></label>
+                <input class="form-control form-control-lg" asp-for="PersonPhoneNumber" atype="text" placeholder="Satıcı Telefon Numarasını" aria-label=".form-control-lg example">
+                <span asp-validation-for="PersonPhoneNumber"></span>
+            </div>
+            <div>
+                <label asp-for="Adress"></label>
+                <input class="form-control form-control-lg" asp-for="Adress" atype="text" placeholder="Ev Adresini Giriniz" aria-label=".form-control-lg example">
+                <span asp-validation-for="Adress"></span>
+            </div>
+            <br />
+            <div>
+                <label for="Status">Durum</label>
+                <input type="checkbox" asp-for="Status" />
+                Aktif İlan
+            </div>
+            <br />
+
+            <button type="submit" asp-action="HomeSearch" asp-controller="Admin" class="btn btn-success">Güncelle </button>
+
+        </form>
+    </div>
+
+</div>
+

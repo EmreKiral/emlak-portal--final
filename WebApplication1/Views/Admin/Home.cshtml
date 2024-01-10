@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewData["Title"] = "Home";
+    Layout = "~/Views/Shared/Admin.cshtml";
+}
+@model List<HouseViewModel>
+
+
+<div class="d-flex justify-content-end" style="margin-top: 3%;">
+    <a asp-action="HomeAdd" asp-controller="Admin">  <div class="btn btn-primary">Yeni Ev Ekle</div> </a>
+</div>
+<div class="row mt-10" style="margin-top:10px;">
+    <div class="col-md-12">
+        <table class="table table-dark" id="citytable">
+            <thead>
+                <tr>
+                    <td>#No</td>
+                    <td>Ev Adı</td>
+                    <td>Ev Açıklmaası</td>
+                    <td>Ev Resim</td>
+                    <td>İlan Türü</td>
+                    <td>İşlemler</td>
+
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int j = 1;
+                }
+                @foreach(var house in Model)
+                {
+                    <tr>
+                        <td>@j</td>
+                        <td>@house.Name</td>
+                        <td>@house.Description</td>
+                        <td><img src="~/House/@house.Resim1imgsrc" width="100px;" height="100px;" /></td>
+                        <td>
+                            @if (@house.Status == true)
+                            {
+                                <span>Aktif</span>
+                            }else{
+                                <span>Pasif</span>
+                            } 
+                        </td>
+                        <td>
+                            <a asp-action="HomeDelete" asp-controller="Admin" asp-route-id="@house.Id" class="btn btn-danger">Sil</a>
+                            <a asp-action="HomeSearch" asp-controller="Admin" asp-route-id="@house.Id" class="btn btn-success">Düzenle</a>
+                          
+                            
+                        </td>
+                       
+                    </tr>
+                    j = j + 1;
+                }  
+            </tbody>
+        </table>
+    </div>
+</div>
+

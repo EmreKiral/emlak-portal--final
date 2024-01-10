@@ -1,0 +1,79 @@
+﻿
+@{
+    Layout = null;
+}
+@model RegisterViewModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Emlak Portalı | Yeni Kullanıcı Kaydı</title>
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="~/colorlib-regform-8/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="~/colorlib-regform-8/css/style.css">
+</head>
+<body>
+
+    <div class="main">
+
+        <section class="signup">
+            <!-- <img src="images/signup-bg.jpg" alt=""> -->
+            <div class="container">
+                <div class="signup-content">
+                    <form asp-action="Register" asp-controller="Login" method="post" class="signup-form">
+                        <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+
+                        <h2 class="form-title">Hesap Oluşturun</h2>
+                        <div class="form-group">
+                            <input type="text" class="form-input" asp-for="FullName" id="name" required placeholder="Adınız Soyadınız" />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-input" asp-for="Email" id="email" required placeholder="Email Adresiniz" />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-input" asp-for="UserName" id="username" required placeholder="Kullanıcı Adınız" />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-input" asp-for="Password" id="password" placeholder="Şifreniz" required />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                            <span toggle="password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-input" required asp-for="PasswordConfirm" id="re_password" placeholder="Şifreyi Tekrar Girin" />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+                        
+                        
+                        <div class="form-group">
+                            <input type="submit" name="submit" id="submit" class="form-submit" value="Kayıt Ol" />
+                        </div>
+                    </form>
+                    <p class="loginhere">
+                        Zaten hesabınız var mı? <a href="/Login/Index" class="loginhere-link">Giriş Yapın</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- JS -->
+    <script src="~/colorlib-regform-8/vendor/jquery/jquery.min.js"></script>
+    <script src="~/colorlib-regform-8/js/main.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    @section Scripts{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>
